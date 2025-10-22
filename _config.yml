@@ -30,11 +30,11 @@ plugins:
   - jekyll-feed
   - jekyll-seo-tag
 
-remote_theme: jekyll/minima
-plugins:
-  - jekyll-remote-theme
-minima:
-  skin: auto  # This enables system preference detection (light/dark based on OS)
+# remote_theme: jekyll/minima
+# plugins:
+#   - jekyll-remote-theme
+# minima:
+#   skin: auto  # This enables system preference detection (light/dark based on OS)
 
 # Exclude from processing.
 # The following items will not be processed, by default.
