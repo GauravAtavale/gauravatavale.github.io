@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "REINFORCE Algorithm: A Foundation of Policy Gradient Methods"
-date: 2025-10-23 14:30:00 -0400
+date: 2025-10-20 14:30:00 -0400
 categories: [ai, reinforcement-learning]
 excerpt: "An introduction to the REINFORCE algorithm, one of the fundamental policy gradient methods in reinforcement learning."
 ---
