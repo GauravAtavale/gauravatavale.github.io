@@ -1,4 +1,4 @@
----
+<!-- ---
 layout: default
 ---
 <div class="home">
@@ -96,5 +96,175 @@ layout: default
   color: var(--text-secondary);
   line-height: 1.6;
   margin-top: 0.75rem;
+}
+</style> -->
+
+---
+layout: default
+---
+<div class="home">
+  <div class="intro-card">
+    {{ content }}
+  </div>
+
+  {% if site.posts.size > 0 %}
+    <h2 class="section-heading">Latest Posts</h2>
+    <div class="post-grid">
+      {% for post in site.posts %}
+        <article class="post-card">
+          <a href="{{ post.url | relative_url }}" class="card-link">
+            <div class="card-content">
+              <h3 class="card-title">{{ post.title | escape }}</h3>
+              <p class="card-meta">
+                <time datetime="{{ post.date | date_to_xmlschema }}">
+                  {{ post.date | date: "%B %-d, %Y" }}
+                </time>
+              </p>
+              {% if post.excerpt %}
+                <p class="card-excerpt">{{ post.excerpt | strip_html | truncatewords: 25 }}</p>
+              {% endif %}
+              <span class="read-more">Continue reading →</span>
+            </div>
+          </a>
+        </article>
+      {% endfor %}
+    </div>
+  {% endif %}
+</div>
+
+<style>
+.home {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.intro-card {
+  background: var(--bg-secondary);
+  border-radius: 16px;
+  padding: 2.5rem;
+  margin-bottom: 3rem;
+  box-shadow: 0 4px 6px var(--shadow);
+  border: 1px solid var(--border-color);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.intro-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 12px var(--shadow);
+}
+
+.intro-card h1 {
+  font-size: 2.5rem;
+  margin-bottom: 1rem;
+  color: var(--text-primary);
+}
+
+.intro-card p {
+  font-size: 1.1rem;
+  line-height: 1.8;
+  color: var(--text-secondary);
+  margin-bottom: 0.75rem;
+}
+
+.intro-card ul {
+  margin: 1rem 0;
+  padding-left: 1.5rem;
+}
+
+.intro-card li {
+  margin-bottom: 0.5rem;
+  color: var(--text-secondary);
+}
+
+.section-heading {
+  font-size: 2rem;
+  font-weight: 700;
+  margin-bottom: 2rem;
+  color: var(--text-primary);
+}
+
+.post-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 2rem;
+  margin-bottom: 3rem;
+}
+
+.post-card {
+  background: var(--bg-secondary);
+  border-radius: 16px;
+  overflow: hidden;
+  border: 1px solid var(--border-color);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  box-shadow: 0 2px 4px var(--shadow);
+}
+
+.post-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 24px var(--shadow);
+}
+
+.card-link {
+  text-decoration: none;
+  color: inherit;
+  display: block;
+}
+
+.card-content {
+  padding: 2rem;
+}
+
+.card-title {
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin-bottom: 0.75rem;
+  color: var(--text-primary);
+  line-height: 1.3;
+  transition: color 0.2s ease;
+}
+
+.post-card:hover .card-title {
+  color: var(--link-color);
+}
+
+.card-meta {
+  color: var(--text-secondary);
+  font-size: 0.9rem;
+  margin-bottom: 1rem;
+}
+
+.card-excerpt {
+  color: var(--text-secondary);
+  line-height: 1.6;
+  margin-bottom: 1.25rem;
+  font-size: 0.95rem;
+}
+
+.read-more {
+  color: var(--link-color);
+  font-weight: 500;
+  font-size: 0.95rem;
+  transition: gap 0.2s ease;
+  display: inline-block;
+}
+
+.post-card:hover .read-more {
+  transform: translateX(4px);
+}
+
+@media (max-width: 768px) {
+  .post-grid {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+  
+  .intro-card {
+    padding: 1.5rem;
+  }
+  
+  .intro-card h1 {
+    font-size: 2rem;
+  }
 }
 </style>
