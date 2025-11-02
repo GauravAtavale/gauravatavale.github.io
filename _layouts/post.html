@@ -22,24 +22,78 @@ layout: default
   </div>
 </article>
 
-<script src="https://giscus.app/client.js"
-        data-repo="GauravAtavale/gauravatavale.github.io"
-        data-repo-id="R_kgDOQGIZYg"
-        data-category="Blog Comments"
-        data-category-id="DIC_kwDOQGIZYs4CxWPs"
-        data-mapping="pathname"
-        data-strict="0"
-        data-reactions-enabled="1"
-        data-emit-metadata="0"
-        data-input-position="bottom"
-        data-theme="preferred_color_scheme"
-        data-lang="en"
-        crossorigin="anonymous"
-        async>
+<div class="comments-wrapper">
+  <h2 class="comments-title">Comments</h2>
+  <script src="https://giscus.app/client.js"
+          data-repo="GauravAtavale/gauravatavale.github.io"
+          data-repo-id="R_kgDOQGIZYg"
+          data-category="Blog Comments"
+          data-category-id="DIC_kwDOQGIZYs4CxWPs"
+          data-mapping="pathname"
+          data-strict="0"
+          data-reactions-enabled="1"
+          data-emit-metadata="0"
+          data-input-position="bottom"
+          data-theme="preferred_color_scheme"
+          data-lang="en"
+          crossorigin="anonymous"
+          async>
+  </script>
+</div>
+
+<script>
+  // Function to update Giscus theme
+  function setGiscusTheme(theme) {
+    const iframe = document.querySelector('iframe.giscus-frame');
+    if (!iframe) return;
+    
+    iframe.contentWindow.postMessage(
+      { giscus: { setConfig: { theme: theme } } },
+      'https://giscus.app'
+    );
+  }
+
+  // Watch for theme attribute changes on html element
+  const observer = new MutationObserver((mutations) => {
+    mutations.forEach((mutation) => {
+      if (mutation.attributeName === 'data-theme') {
+        const theme = document.documentElement.getAttribute('data-theme');
+        setGiscusTheme(theme);
+      }
+    });
+  });
+
+  // Start observing the html element for attribute changes
+  observer.observe(document.documentElement, {
+    attributes: true,
+    attributeFilter: ['data-theme']
+  });
+
+  // Set initial theme when Giscus loads
+  window.addEventListener('load', () => {
+    // Wait a bit for Giscus iframe to be ready
+    setTimeout(() => {
+      const currentTheme = document.documentElement.getAttribute('data-theme') || 'light';
+      setGiscusTheme(currentTheme);
+    }, 1000);
+  });
 </script>
 
-
 <style>
+.comments-wrapper {
+  max-width: 800px;
+  margin: 3rem auto 0;
+  padding-top: 2rem;
+  border-top: 1px solid var(--border-color);
+}
+
+.comments-title {
+  font-size: 1.8rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-bottom: 1.5rem;
+}
+
 .post {
   max-width: 800px;
   margin: 0 auto;
