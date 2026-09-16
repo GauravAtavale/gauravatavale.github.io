@@ -4,16 +4,16 @@ title: About
 permalink: /about/
 ---
 
-# Hi, I'm Gaurav 👋
+# Hi, I'm Gaurav &#128075;
 
 I am a passionate technologist who believes in the power of AI and technology to solve real-world problems. I love building things that matter and sharing my thoughts on technology, AI, and life.
 
 ## My Beliefs
 
-- **Technology can change the world** - I believe in using technology to create positive impact
-- **AI is the future** - Artificial Intelligence will transform how we live and work
-- **Continuous learning** - Always be curious and keep learning new things
-- **Open source** - Knowledge should be shared and accessible to everyone
+- **Technology can change the world** — I believe in using technology to create positive impact
+- **AI is the future** — Artificial Intelligence will transform how we live and work
+- **Continuous learning** — Always be curious and keep learning new things
+- **Open source** — Knowledge should be shared and accessible to everyone
 
 ## What I Do
 
@@ -23,6 +23,10 @@ I work on AI/ML projects, write about technology, and explore the intersection o
 
 I'm always excited to connect with fellow technologists and AI enthusiasts. If you're working on something interesting or just want to chat about technology, feel free to reach out!
 
+- [GitHub](https://github.com/gauravatavale)
+- [Twitter](#)
+- [LinkedIn](#)
+
 ---
 
-*A space for AI, Technology, Philosophy, Life, or whatever I fancy at the moment.*
+*A space for AI, Technology, and whatever I fancy at the moment.*

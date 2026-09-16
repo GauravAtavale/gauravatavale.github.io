@@ -1,60 +1,54 @@
-# Welcome to Jekyll!
-#
-# This config file is meant for settings that affect your whole blog, values
-# which you are expected to set up once and rarely edit after that. If you find
-# yourself editing this file very often, consider using Jekyll's data files
-# feature for the data you need to update frequently.
-#
-# For technical reasons, this file is *NOT* reloaded automatically when you use
-# 'bundle exec jekyll serve'. If you change this file, please restart the server process.
-#
-# If you need help with YAML syntax, here are some quick references for you:
-# https://learn-the-web.algonquindesign.ca/topics/markdown-yaml-cheat-sheet/#yaml
-# https://learnxinyminutes.com/docs/yaml/
-#
 # Site settings
-# These are used to personalize your new site. If you look in the HTML files,
-# you will see them accessed via {{ site.title }}, {{ site.email }}, and so on.
-# You can create any custom variable you would like, and they will be accessible
-# in the templates via {{ site.myvariable }}.
-
-# title: "Gaurav's Blog"
-# description: "Thoughts on AI, Technology, and Life"
-# url: "https://gauravatavale.github.io"
-# author:
-#   name: "Gaurav Atavale"
-#   email: "gauravatavale@gmail.com"
-# theme: minima
-# markdown: kramdown
-# plugins:
-#   - jekyll-feed
-#   - jekyll-seo-tag
-
-# Site settings
-title: Gaurav's Blog
-description: A space for AI, Technology, and thoughts
+title: "Gaurav's Blog"
+description: "A space for AI, Machine Learning, and whatever I fancy at the moment."
 url: "https://gauravatavale.github.io"
 baseurl: ""
 
-# Author information
+# Author / footer info — fill in your real handles
 author:
   name: Gaurav Atavale
   email: your-email@example.com
+  github: gauravatavale     # used to build https://github.com/<github>
+  twitter: ""                # used to build https://twitter.com/<twitter> — leave blank to hide
+  linkedin: ""                # used to build https://linkedin.com/in/<linkedin> — leave blank to hide
+  image: /assets/images/me.jpg # your avatar — add this file, see README-CHANGES.md
 
 # Build settings
 future: true
 markdown: kramdown
 theme: minima
 
-# Permalink structure (removes .html and categories from URL)
+kramdown:
+  input: GFM
+  auto_ids: true
+  syntax_highlighter: rouge
+  math_engine: mathjax
+
+# Removes .html and categories from post URLs
 permalink: /posts/:year-:month-:day-:title/
 
-# Plugins
+# Second collection, styled identically to posts, used for the Projects page
+collections:
+  projects:
+    output: true
+    permalink: /projects/:path/
+
 plugins:
   - jekyll-feed
   - jekyll-seo-tag
 
-# Exclude from processing
+defaults:
+  - scope:
+      path: ""
+      type: "posts"
+    values:
+      layout: "post"
+  - scope:
+      path: ""
+      type: "projects"
+    values:
+      layout: "post"
+
 exclude:
   - Gemfile
   - Gemfile.lock
@@ -65,31 +59,5 @@ exclude:
   - vendor/ruby/
   - scripts/
   - README.md
-
-
-
-# remote_theme: jekyll/minima
-# plugins:
-#   - jekyll-remote-theme
-# minima:
-#   skin: auto  # This enables system preference detection (light/dark based on OS)
-
-# Exclude from processing.
-# The following items will not be processed, by default.
-# Any item listed under the `exclude:` key here will be automatically added to
-# the internal "default list".
-#
-# Excluded items can be processed by explicitly listing the directories or
-# their entries' file path in the `include:` list.
-#
-# exclude:
-#   - .sass-cache/
-#   - .jekyll-cache/
-#   - gemfiles/
-#   - Gemfile
-#   - Gemfile.lock
-#   - node_modules/
-#   - vendor/bundle/
-#   - vendor/cache/
-#   - vendor/gems/
-#   - vendor/ruby/
+  - README-CHANGES.md
+  - CONTENT_WORKFLOW.md

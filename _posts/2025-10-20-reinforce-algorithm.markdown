@@ -1,8 +1,8 @@
 ---
 layout: post
 title: "REINFORCE Algorithm: A Foundation of Policy Gradient Methods"
-date: 2025-10-20 14:30:00 -0400
-categories: [ai, reinforcement-learning]
+date: 2025-10-20 10:00:00 -0400
+tags: [ai, reinforcement-learning]
 excerpt: "An introduction to the REINFORCE algorithm, one of the fundamental policy gradient methods in reinforcement learning."
 ---
 
@@ -12,20 +12,22 @@ The REINFORCE algorithm, introduced by Ronald Williams in 1992, is a Monte Carlo
 
 The algorithm uses the policy gradient theorem to update policy parameters in the direction that increases expected return. It collects complete episode trajectories, computes returns, and updates the policy using:
 
-∇θJ(θ) = E[∇θ log πθ(a|s) * G_t]
+$$\nabla_\theta J(\theta) = \mathbb{E}\left[\nabla_\theta \log \pi_\theta(a \mid s) \cdot G_t\right]$$
 
-where G_t is the return from time step t. This approach is elegant because it learns directly from raw rewards without requiring a value function approximation.
+where \\(G_t\\) is the return from time step \\(t\\). This approach is elegant because it learns directly from raw rewards without requiring a value function approximation.
 
 ## Key Characteristics
 
 **Strengths:**
+
 - Works well with continuous action spaces
-- Guaranteed convergence to local optimum
+- Guaranteed convergence to a local optimum
 - Can learn stochastic policies naturally
 
 **Limitations:**
+
 - High variance in gradient estimates
-- Requires complete episodes (online learning challenging)
+- Requires complete episodes (online learning is challenging)
 - Sample inefficient compared to actor-critic methods
 
 ## Modern Applications
