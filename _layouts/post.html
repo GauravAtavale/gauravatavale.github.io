@@ -1,82 +1,59 @@
 ---
 layout: default
 ---
-<article class="post">
-  {% if page.image %}
-  <img class="cover" src="{{ page.image | relative_url }}" alt="{{ page.title }}">
-  {% endif %}
+{% if page.image %}
+<div class="featured-image-container">
+  <img src="{{ page.image | relative_url }}" alt="{{ page.title }}" class="featured-image">
+</div>
+{% endif %}
 
+<article class="blog-post">
   <h1>{{ page.title }}</h1>
+  <p class="meta">{{ page.date | date: "%B %-d, %Y" }}</p>
 
-  <div class="post-meta">
-    <time datetime="{{ page.date | date_to_xmlschema }}">{{ page.date | date: "%B %-d, %Y" }}</time>
-    {% assign words = content | strip_html | number_of_words %}
-    {% assign read_time = words | divided_by: 200 | at_least: 1 %}
-    <span class="dot">&middot;</span>
-    <span>{{ read_time }} min read</span>
-  </div>
-
-  {% assign post_tags = page.tags | default: page.categories %}
-  {% if post_tags.size > 0 %}
-  <div class="tags">
-    {% for tag in post_tags %}<span class="tag">{{ tag }}</span>{% endfor %}
-  </div>
-  {% endif %}
-
-  {% include toc.html %}
+  {%- include toc.html -%}
 
   <div class="post-content">
     {{ content }}
   </div>
 
-  {% include share-buttons.html %}
-</article>
+  <div class="share-section mt-4">
+    <h5 class="share-title">Share this post with your friends!!</h5>
+    <div class="share-buttons">
+      <a href="https://twitter.com/intent/tweet?url={{ page.url | absolute_url | url_encode }}&text={{ page.title | url_encode }}" class="share-btn" target="_blank" rel="noopener noreferrer"><i class="fab fa-twitter"></i> Twitter</a>
+      <a href="https://reddit.com/submit?url={{ page.url | absolute_url | url_encode }}&title={{ page.title | url_encode }}" class="share-btn" target="_blank" rel="noopener noreferrer"><i class="fab fa-reddit"></i> Reddit</a>
+      <a href="https://www.linkedin.com/sharing/share-offsite/?url={{ page.url | absolute_url | url_encode }}" class="share-btn" target="_blank" rel="noopener noreferrer"><i class="fab fa-linkedin"></i> LinkedIn</a>
+      <a href="https://www.facebook.com/sharer/sharer.php?u={{ page.url | absolute_url | url_encode }}" class="share-btn" target="_blank" rel="noopener noreferrer"><i class="fab fa-facebook"></i> Facebook</a>
+    </div>
+  </div>
 
-<div class="comments-wrapper">
-  <h2 class="comments-title">Comments</h2>
-  <script src="https://giscus.app/client.js"
-          data-repo="GauravAtavale/gauravatavale.github.io"
-          data-repo-id="R_kgDOQGIZYg"
-          data-category="Blog Comments"
-          data-category-id="DIC_kwDOQGIZYs4CxWPs"
-          data-mapping="pathname"
-          data-strict="0"
-          data-reactions-enabled="1"
-          data-emit-metadata="0"
-          data-input-position="bottom"
-          data-theme="preferred_color_scheme"
-          data-lang="en"
-          crossorigin="anonymous"
-          async>
+  {% if page.comments != false %}
+  <div class="comments-section mt-5">
+    <h5 class="comments-title mb-4">Comments</h5>
+    <script src="https://giscus.app/client.js"
+            data-repo="GauravAtavale/gauravatavale.github.io"
+            data-repo-id="R_kgDOQGIZYg"
+            data-category="Blog Comments"
+            data-category-id="DIC_kwDOQGIZYs4CxWPs"
+            data-mapping="pathname"
+            data-strict="0"
+            data-reactions-enabled="1"
+            data-emit-metadata="0"
+            data-input-position="bottom"
+            data-theme="preferred_color_scheme"
+            data-lang="en"
+            crossorigin="anonymous"
+            async>
+    </script>
+  </div>
+  <script>
+    function setGiscusTheme(theme){var f=document.querySelector('iframe.giscus-frame');if(!f)return;f.contentWindow.postMessage({giscus:{setConfig:{theme:theme}}},'https://giscus.app');}
+    new MutationObserver(function(m){m.forEach(function(x){if(x.attributeName==='data-theme'){setGiscusTheme(document.documentElement.getAttribute('data-theme'));}});}).observe(document.documentElement,{attributes:true,attributeFilter:['data-theme']});
+    window.addEventListener('load',function(){setTimeout(function(){setGiscusTheme(document.documentElement.getAttribute('data-theme')||'light');},1000);});
   </script>
-</div>
+  {% endif %}
 
-<script>
-  // Keep Giscus's iframe theme in sync with the site's light/dark toggle
-  function setGiscusTheme(theme) {
-    var iframe = document.querySelector('iframe.giscus-frame');
-    if (!iframe) return;
-    iframe.contentWindow.postMessage(
-      { giscus: { setConfig: { theme: theme } } },
-      'https://giscus.app'
-    );
-  }
-
-  var giscusThemeObserver = new MutationObserver(function (mutations) {
-    mutations.forEach(function (mutation) {
-      if (mutation.attributeName === 'data-theme') {
-        setGiscusTheme(document.documentElement.getAttribute('data-theme'));
-      }
-    });
-  });
-  giscusThemeObserver.observe(document.documentElement, {
-    attributes: true,
-    attributeFilter: ['data-theme']
-  });
-
-  window.addEventListener('load', function () {
-    setTimeout(function () {
-      setGiscusTheme(document.documentElement.getAttribute('data-theme') || 'light');
-    }, 1000);
-  });
-</script>
+  <button id="back-to-top" class="back-to-top" aria-label="Back to top">
+    <i class="fas fa-arrow-up"></i>
+  </button>
+</article>

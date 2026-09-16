@@ -1,62 +1,60 @@
 # Site settings
 title: "Gaurav's Blog"
-description: "A space for AI, Machine Learning, and whatever I fancy at the moment."
-url: "https://gauravatavale.github.io"
+email: your-email@example.com
+description: >-
+  A space for AI, Machine Learning, and whatever I fancy at the moment.
 baseurl: ""
+url: "https://gauravatavale.github.io"
 
-# Author / footer info — fill in your real handles
+# Author / socials (footer + home portrait pull from these)
 author:
   name: Gaurav Atavale
-  email: your-email@example.com
-  github: gauravatavale     # used to build https://github.com/<github>
-  twitter: ""                # used to build https://twitter.com/<twitter> — leave blank to hide
-  linkedin: ""                # used to build https://linkedin.com/in/<linkedin> — leave blank to hide
-  image: /assets/images/me.jpg # your avatar — add this file, see README-CHANGES.md
+  image: /assets/images/me.jpg
+github_username:  gauravatavale
+twitter_username: ""
+linkedin_username: ""
 
 # Build settings
-future: true
-markdown: kramdown
 theme: minima
+plugins:
+  - jekyll-feed
+  - jekyll-seo-tag
+  - jekyll-sitemap
 
+markdown: kramdown
 kramdown:
-  input: GFM
-  auto_ids: true
-  syntax_highlighter: rouge
   math_engine: mathjax
+  syntax_highlighter: rouge
 
-# Removes .html and categories from post URLs
+future: true
+show_excerpts: true
 permalink: /posts/:year-:month-:day-:title/
 
-# Second collection, styled identically to posts, used for the Projects page
+# Collections — projects styled with the same card grid as blog
 collections:
   projects:
     output: true
     permalink: /projects/:path/
-
-plugins:
-  - jekyll-feed
-  - jekyll-seo-tag
 
 defaults:
   - scope:
       path: ""
       type: "posts"
     values:
-      layout: "post"
+      layout: post
+      math: true
   - scope:
       path: ""
       type: "projects"
     values:
-      layout: "post"
+      layout: post
+      math: true
 
 exclude:
   - Gemfile
   - Gemfile.lock
   - node_modules
-  - vendor/bundle/
-  - vendor/cache/
-  - vendor/gems/
-  - vendor/ruby/
+  - vendor
   - scripts/
   - README.md
   - README-CHANGES.md
