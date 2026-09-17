@@ -16,6 +16,20 @@ layout: default
             <li>Stay curious, keep learning, share openly</li>
           </ul>
           <p>If you're building something interesting or just want to talk tech, <a href="/about/">reach out</a>.</p>
+          <div class="intro-socials">
+            {% if site.github_username %}
+            <a href="https://github.com/{{ site.github_username }}" target="_blank" rel="noopener" aria-label="GitHub"><i class="fa-brands fa-github"></i></a>
+            {% endif %}
+            {% if site.twitter_username and site.twitter_username != "" %}
+            <a href="https://twitter.com/{{ site.twitter_username }}" target="_blank" rel="noopener" aria-label="Twitter"><i class="fa-brands fa-x-twitter"></i></a>
+            {% endif %}
+            {% if site.linkedin_username and site.linkedin_username != "" %}
+            <a href="https://linkedin.com/in/{{ site.linkedin_username }}" target="_blank" rel="noopener" aria-label="LinkedIn"><i class="fa-brands fa-linkedin"></i></a>
+            {% endif %}
+            {% if site.email and site.email != "" and site.email != "your-email@example.com" %}
+            <a href="mailto:{{ site.email }}" aria-label="Email"><i class="fa-solid fa-envelope"></i></a>
+            {% endif %}
+          </div>
         </div>
         <div class="portrait-container">
           <img src="{{ site.author.image | default: '/assets/images/me.jpg' | relative_url }}" alt="{{ site.author.name }}" class="portrait-image">
@@ -25,8 +39,9 @@ layout: default
 
       {% if site.posts.size > 0 %}
       <section>
-        <h2 class="section-title">Latest Post</h2>
-        {% assign latest_post = site.posts | sort: 'date' | reverse | first %}
+        <h2 class="section-title">Recent Posts</h2>
+        {% assign recent_posts = site.posts | sort: 'date' | reverse %}
+        {% for post in recent_posts limit:10 %}
         <div class="latest-post-card">
           <div class="post-meta">
             <div class="meta-left">
@@ -35,7 +50,7 @@ layout: default
                   <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path>
                   <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path>
                 </svg>
-                {{ latest_post.date | date: "%B %-d, %Y" }}
+                {{ post.date | date: "%B %-d, %Y" }}
               </span>
             </div>
             <div class="meta-right">
@@ -44,18 +59,18 @@ layout: default
                   <circle cx="12" cy="12" r="10"></circle>
                   <polyline points="12 6 12 12 16 14"></polyline>
                 </svg>
-                {% capture words %}{{ latest_post.content | number_of_words }}{% endcapture %}
+                {% capture words %}{{ post.content | number_of_words }}{% endcapture %}
                 {% unless words contains "-" %}{{ words | plus: 250 | divided_by: 250 | append: " minute read" }}{% endunless %}
               </span>
             </div>
           </div>
           <h3 class="post-title">
-            <a href="{{ latest_post.url | relative_url }}">{{ latest_post.title | escape }}</a>
+            <a href="{{ post.url | relative_url }}">{{ post.title | escape }}</a>
           </h3>
           {% if site.show_excerpts %}
-            <div class="post-excerpt">{{ latest_post.excerpt }}</div>
+            <div class="post-excerpt">{{ post.excerpt }}</div>
           {% endif %}
-          <a href="{{ latest_post.url | relative_url }}" class="read-more">
+          <a href="{{ post.url | relative_url }}" class="read-more">
             Continue reading
             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="arrow-icon">
               <line x1="5" y1="12" x2="19" y2="12"></line>
@@ -63,6 +78,7 @@ layout: default
             </svg>
           </a>
         </div>
+        {% endfor %}
         <div class="view-all-container">
           <a href="{{ "/blog/" | relative_url }}" class="view-all-posts">View All Posts</a>
         </div>
