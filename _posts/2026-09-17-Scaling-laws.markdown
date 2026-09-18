@@ -1,7 +1,8 @@
 ---
 layout: post
-title: The Curve That Explains Modern AI Scaling"
+title: The Curve That Explains Modern AI Scaling
 date: 2026-09-17 10:00:00 -0400
+published: false
 tags: [ai, reinforcement-learning]
 excerpt: "An introduction to the REINFORCE algorithm, one of the fundamental policy gradient methods in reinforcement learning."
 ---
