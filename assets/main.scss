@@ -2676,3 +2676,12 @@ figure {
     line-height: 1.5;
   }
 }
+
+// Ensure figure images round on all four corners, overriding the
+// broader `.post-content img` / `.page-content img` radius rules
+.post-content figure img,
+.page-content figure img,
+figure img {
+  border-radius: 12px !important;
+  overflow: hidden;
+}
