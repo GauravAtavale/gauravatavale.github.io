@@ -26,9 +26,10 @@ Training loss only ever goes down. A bigger model has more freedom to bend towar
 
 Test loss does something else. Early on it falls alongside training loss, because the extra flexibility is being spent on real structure the smaller model was too rigid to capture. Then it bottoms out. Then it starts climbing, while training loss keeps dropping — and that widening gap between the two is the whole of the classical warning. The model is still improving on the data it has seen and getting worse on the data it hasn't. What it has started fitting is noise: the quirks of these particular training examples, which do not recur in test data.
 
-![testing_png](/assets/images/scaling_laws/classical_curve_widening_gap.png)
-
-![testing_svg](/assets/images/scaling_laws/classical_curve_widening_gap.png)
+  <figure>
+    <img src="/assets/images/scaling_laws/classical_curve_widening_gap.svg)" alt="Double descent curve">
+    <figcaption>Test loss dips, rises, then falls again past the interpolation threshold.</figcaption>
+  </figure>
 
 
 This is the bias-variance trade-off. Too little flexibility and the model misses real structure. Too much and it fits accidents. The theory of the era made this precise. It measured a model's flexibility by asking how much it could fit — a class flexible enough to fit any labelling you threw at it counted as very flexible, and VC dimension was the standard way of putting a number on that. Every guarantee had the same shape. More flexibility, weaker guarantee. So the advice was simple: use the smallest model that fits. Unused flexibility is not free.
