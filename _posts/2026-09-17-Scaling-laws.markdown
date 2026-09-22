@@ -27,8 +27,8 @@ Training loss only ever goes down. A bigger model has more freedom to bend towar
 Test loss does something else. Early on it falls alongside training loss, because the extra flexibility is being spent on real structure the smaller model was too rigid to capture. Then it bottoms out. Then it starts climbing, while training loss keeps dropping — and that widening gap between the two is the whole of the classical warning. The model is still improving on the data it has seen and getting worse on the data it hasn't. What it has started fitting is noise: the quirks of these particular training examples, which do not recur in test data.
 
 <figure>
-<img src="/assets/images/scaling_laws/figure1_bias_variance_boxed_labels.svg" alt="Double descent curve">
-<figcaption>The classical picture: training loss keeps falling while test loss bottoms out and climbs, the gap between them widening.</figcaption>
+<img src="/assets/images/scaling_laws/figure1_bias_variance_green_blue.svg" alt="Double descent curve">
+<figcaption>Figure 1. The classical picture: training loss keeps falling while test loss bottoms out and climbs, the gap between them widening.</figcaption>
 </figure>
 
 
@@ -53,6 +53,12 @@ Put the two together and the classical prediction breaks where it was most confi
 That missing theory is what Belkin and Nakkiran supplied — not by adding a bound to the curve, but by showing the curve had been drawn too short.
 
 In 2019, Belkin and colleagues extended the plot past the point where everyone had stopped looking. Train a model family at growing sizes and, as before, test error falls, bottoms out, then climbs — the classical warning, playing out on schedule. But keep going. Just as the model becomes large enough to fit the training set exactly, test error peaks — and then, as the model grows further, it falls a second time, often below the best value the classical regime ever reached. One curve, two descents. They named it double descent.
+
+<figure>
+<img src="/assets/images/scaling_laws/figure2_double_descent_extended_green_blue.svg" alt="Double descent curve">
+<figcaption>Figure 2. Double descent. Test loss follows the classical pattern at first, falling and then rising. It peaks at the interpolation threshold, where the model is just large enough to fit the training set exactly. Past that point it falls a second time, often below the best value the classical regime reached. Training loss drops to near zero at the threshold and stays there. Schematic based on Belkin et al. (2019) and Nakkiran et al. (2019).</figcaption>
+</figure>
+
 
 Later that year, Nakkiran and colleagues at OpenAI showed how general the pattern was. The second descent appears as you enlarge the model, as you add data, and as you train for longer — the same shape along three separate axes. And they located the peak precisely: it sits at the interpolation threshold, the point where the model is just barely able to fit the training set. Not "too many parameters." Just barely enough.
 
