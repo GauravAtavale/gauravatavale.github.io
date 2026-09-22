@@ -27,8 +27,8 @@ Training loss only ever goes down. A bigger model has more freedom to bend towar
 Test loss does something else. Early on it falls alongside training loss, because the extra flexibility is being spent on real structure the smaller model was too rigid to capture. Then it bottoms out. Then it starts climbing, while training loss keeps dropping — and that widening gap between the two is the whole of the classical warning. The model is still improving on the data it has seen and getting worse on the data it hasn't. What it has started fitting is noise: the quirks of these particular training examples, which do not recur in test data.
 
 <figure>
-<img src="/assets/images/scaling_laws/classical_curve_widening_gap.svg" alt="Double descent curve">
-<figcaption>Test loss dips, rises, then falls again past the interpolation threshold.</figcaption>
+<img src="/assets/images/scaling_laws/figure1_bias_variance_boxed_labels.svg" alt="Double descent curve">
+<figcaption>The classical picture: training loss keeps falling while test loss bottoms out and climbs, the gap between them widening.</figcaption>
 </figure>
 
 
