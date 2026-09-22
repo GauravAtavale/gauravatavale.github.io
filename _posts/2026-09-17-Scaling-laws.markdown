@@ -26,6 +26,11 @@ Training loss only ever goes down. A bigger model has more freedom to bend towar
 
 Test loss does something else. Early on it falls alongside training loss, because the extra flexibility is being spent on real structure the smaller model was too rigid to capture. Then it bottoms out. Then it starts climbing, while training loss keeps dropping — and that widening gap between the two is the whole of the classical warning. The model is still improving on the data it has seen and getting worse on the data it hasn't. What it has started fitting is noise: the quirks of these particular training examples, which do not recur in test data.
 
+![testing_png](/assets/images/scaling_laws/classical_curve_widening_gap.png)
+
+![testing_svg](/assets/images/scaling_laws/classical_curve_widening_gap.png)
+
+
 This is the bias-variance trade-off. Too little flexibility and the model misses real structure. Too much and it fits accidents. The theory of the era made this precise. It measured a model's flexibility by asking how much it could fit — a class flexible enough to fit any labelling you threw at it counted as very flexible, and VC dimension was the standard way of putting a number on that. Every guarantee had the same shape. More flexibility, weaker guarantee. So the advice was simple: use the smallest model that fits. Unused flexibility is not free.
 
 The universal approximation theorems, proved at the end of the 1980s, showed that a network with a single hidden layer can approximate any continuous function on a bounded domain as closely as you like, given enough hidden units. In the 2010s this became a talking point about the promise of neural networks. At the time it read as confirmation of the warning. A model class that can represent anything can certainly represent your noise — and the theorems said nothing about how many units that might take, or whether training would ever find the approximation they promised.
