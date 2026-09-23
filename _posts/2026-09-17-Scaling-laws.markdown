@@ -4,6 +4,7 @@ title: Why does scaling make models generalize better?
 date: 2026-09-17 10:00:00 -0400
 tags: [scaling laws, llm, double descent, machine-learning, neural-networks, data-wall]
 excerpt: "Bigger models were supposed to overfit. Instead they generalize better the larger they get. Here's the mechanism behind that — double descent, compression, and the simplicity bias hiding inside scale — and why the data wall is where it stops being free."
+image: /assets/images/scaling_laws/scaling-laws-cover.png
 ---
 
 ## The theory said stop. Nobody stopped.
@@ -27,7 +28,7 @@ Training loss only ever goes down. A bigger model has more freedom to bend towar
 Test loss does something else. Early on it falls alongside training loss, because the extra flexibility is being spent on real structure the smaller model was too rigid to capture. Then it bottoms out. Then it starts climbing, while training loss keeps dropping — and that widening gap between the two is the whole of the classical warning. The model is still improving on the data it has seen and getting worse on the data it hasn't. What it has started fitting is noise: the quirks of these particular training examples, which do not recur in test data.
 
 <figure>
-<img src="/assets/images/scaling_laws/figure1_bias_variance_green_blue.svg" alt="Double descent curve">
+<img src="/assets/images/scaling_laws/figure1_bias_variance_green_blue.svg" alt="Classical ML Curve">
 <figcaption>Figure 1. The classical picture: training loss keeps falling while test loss bottoms out and climbs, the gap between them widening.</figcaption>
 </figure>
 
@@ -87,7 +88,7 @@ Follow that track back to its start and it begins a few years earlier. In 2017, 
 That single word — compression — is where the whole argument turns, and it is worth being exact about why. Count a model's raw parameters and the classical bounds get *looser* as it grows: more parameters, weaker guarantee, error should climb. Measure instead how compressible the trained model is, and the bounds get *tighter* as it grows, because large models compress better. Same networks, same training runs, opposite verdicts — and only the second one matches what actually happens. "Bigger generalizes better" was never true against a raw parameter count. It is true against the right measure of complexity, and finding that measure was the whole game.
 
 <figure>
-<img src="/assets/images/scaling_laws/figure3_structure_compression_guarantee_retitled.svg" alt="Double descent curve">
+<img src="/assets/images/scaling_laws/figure3_structure_compression_guarantee_retitled.svg" alt="Structure Compression Guarantee">
 <figcaption>Figure 3. Structure in the data is what makes a model compressible. The same network, trained on real images, on images with their pixels shuffled, and on images with random labels. The more structure is destroyed, the less the trained model compresses, and the weaker the guarantee it comes with. This is what the compression view buys you: the guarantee tracks the structure a model actually found, not the parameters it happens to have — and because larger networks compress structured data to a greater degree, adding capacity need not mean accepting a weaker guarantee. Schematic, adapted from Lotfi et al. (2022).</figcaption>
 </figure>
 
@@ -100,7 +101,7 @@ Every result so far assumed something the early scaling papers stated openly and
 This is not the curve from earlier. That one ran along model size and peaked where the model could just barely fit the training set; this one runs along data repetition, and peaks where repetition forces the model to memorize the same few examples over and over. The shape is the same in both — too little capacity, a dangerous middle, then recovery — and so is the cause. Trouble arrives when capacity outruns the amount of genuine, non-redundant signal available, whether you get there by shrinking the model toward the data or the data toward the model.
 
 <figure>
-<img src="/assets/images/scaling_laws/figure4_capacity_signal_legend_fixed.svg" alt="Double descent curve">
+<img src="/assets/images/scaling_laws/figure4_capacity_signal_legend_fixed.svg" alt="Capacity Signal">
 <figcaption>Figure 4. Two routes to the same imbalance. Trouble arrives when a model's capacity outruns the genuine, non-redundant signal it has to learn from — whether you get there by enlarging the model against a fixed dataset, or by the supply of unique data thinning under a fixed model. Both raise the same quantity, parameters per unique token, and both raise test loss. That ratio is what Lovelace and colleagues wrote into the scaling law as an explicit penalty.</figcaption>
 </figure>
 
