@@ -6,7 +6,7 @@ permalink: /about/
 
 # Hi, I'm Gaurav 👋
 
-I am a passionate technologist who believes in the power of AI and technology to solve real-world problems. I love building things that matter and sharing my thoughts on technology, AI, and life.
+I'm an AI Research Scientist at American Express AI Labs. I build and study systems that reason, plan, and learn from feedback — and I learn best by building them from the ground up.
 
 ## My Beliefs
 

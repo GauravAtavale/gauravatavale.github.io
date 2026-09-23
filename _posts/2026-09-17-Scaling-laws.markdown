@@ -100,7 +100,7 @@ Every result so far assumed something the early scaling papers stated openly and
 This is not the curve from earlier. That one ran along model size and peaked where the model could just barely fit the training set; this one runs along data repetition, and peaks where repetition forces the model to memorize the same few examples over and over. The shape is the same in both — too little capacity, a dangerous middle, then recovery — and so is the cause. Trouble arrives when capacity outruns the amount of genuine, non-redundant signal available, whether you get there by shrinking the model toward the data or the data toward the model.
 
 <figure>
-<img src="/assets/images/scaling_laws/figure4_capacity_signal_with_loss.svg" alt="Double descent curve">
+<img src="/assets/images/scaling_laws/figure4_capacity_signal_legend_fixed.svg" alt="Double descent curve">
 <figcaption>Figure 4. Two routes to the same imbalance. Trouble arrives when a model's capacity outruns the genuine, non-redundant signal it has to learn from — whether you get there by enlarging the model against a fixed dataset, or by the supply of unique data thinning under a fixed model. Both raise the same quantity, parameters per unique token, and both raise test loss. That ratio is what Lovelace and colleagues wrote into the scaling law as an explicit penalty.</figcaption>
 </figure>
 
