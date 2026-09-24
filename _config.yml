@@ -5,8 +5,6 @@ description: >-
   A space for AI, Machine Learning, and whatever I fancy at the moment.
 baseurl: ""
 url: "https://gauravatavale.github.io"
-webmaster_verifications:
-  google: <meta name="google-site-verification" content="0Mn3n4-CrufM_1HHb7FwPH9nUFiK4VXdfbeEvC0jfJo" />
 
 # Author / socials (footer + home portrait pull from these)
 author:
