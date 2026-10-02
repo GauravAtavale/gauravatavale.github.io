@@ -4,17 +4,21 @@ title: "Chess_jev_laya_clm"
 date: 2026-09-30 10:00:00 -0400
 # published: false
 tags: [ai, reinforcement-learning]
-excerpt: "--"
+excerpt: "A no-search chess tournament between Jev, Laya, and CLM-8B, zero-shot and after fine-tuning on Stockfish data."
+image: /assets/images/scaling_laws/scaling-laws-cover.png
 ---
 
-<figure>
+<video controls muted playsinline loop width="100%">
+  <source src="/assets/images/chess_jev_laya_clm/jev_vs_clm_ft.mp4" type="video/mp4">
+</video>
+<!-- <figure>
   <video autoplay loop muted playsinline>
     <source src="/assets/images/chess_jev_laya_clm/jev_vs_clm_ft.mp4" type="video/mp4">
   </video>
   <figcaption>Video 1. Fine-tuned CLM (open source) checkmates Jev.</figcaption>
-</figure>
+</figure> -->
 
-On September 15, 2026, TypeSafe AI came out of stealth with a model called **Jev**, and it felt like the industry changed overnight. **Jev** isn't a language model in the usual sense. It doesn't generate text; it returns calibrated probabilities over options you define in advance, an approach TypeSafe calls a **"System One"** model. On its own workflow evaluations, TypeSafe claims **Jev** is 193.6 times faster and \444.6 times cheaper than using a large language model, and it charges \$0.042 per million input tokens. The reaction was immediate: its launch video drew 36 million views in two days, and within nine days TypeSafe was reportedly negotiating a \$1 billion-plus round at a valuation of around \$10 billion.
+On September 15, 2026, TypeSafe AI came out of stealth with a model called **Jev**, and it felt like the industry changed overnight. **Jev** isn't a language model in the usual sense. It doesn't generate text; it returns calibrated probabilities over options you define in advance, an approach TypeSafe calls a **"System One"** model. On its own workflow evaluations, TypeSafe claims **Jev** is 193.6 times faster and 444.6 times cheaper than using a large language model, and it charges \$0.042 per million input tokens. The reaction was immediate: its launch video drew 36 million views in two days, and within nine days TypeSafe was reportedly negotiating a \$1 billion-plus round at a valuation of around \$10 billion.
 
 Alternatives arrived almost as fast. Because Jev isn't open source, the community published its own reproductions almost immediately, and open-weight decision models like **Laya (ConvAI)** and **CLM-8B (Stanford / NVIDIA researchers)** now promise the same kind of fast, typed decisions, but with weights you can download, run, and fine-tune yourself.
 
@@ -52,7 +56,7 @@ So the matchup is one strong, closed generalist against two weak but trainable o
 The key constraint in this experiment is that no model searches. A chess engine like Stockfish explores millions of future positions before choosing a move. Here, each model gets one look at the current position and has to decide immediately.
 
 <figure>
-<img src="/assets/images/chess_jev_laya_clm/how_a_move_is_chosen.png" alt="Classical ML Curve">
+<img src="/assets/images/chess_jev_laya_clm/how_a_move_is_chosen.png" alt="Decision-Making in Chess-details">
 <figcaption>Figure 1. Position + every legal move + rule facts → decision model → a score for each move → play the highest.</figcaption>
 </figure>
 
@@ -65,7 +69,7 @@ To fine-tune Laya and CLM, I used Stockfish as a teacher: it scored every legal 
 Out of the box, Jev is in a class of its own. After 10-game matches between every pair of models, the picture came down to five findings.
 
 <figure>
-<img src="/assets/images/chess_jev_laya_clm/head_to_head.png" alt="Classical ML Curve">
+<img src="/assets/images/chess_jev_laya_clm/head_to_head.png" alt="Models ranked by performance">
 <figcaption>Figure 2. 6×6 crosstable, models ranked by performance.</figcaption>
 </figure>
 
@@ -85,7 +89,7 @@ Training setup matters more.
 Laya v2 (400M parameters) and CLM (8B-based) got the same training data, the same rule facts, and the same Stockfish-based targets. They ended up playing at nearly the same level. To measure move quality, I compared each model's chosen move with Stockfish's best move on the same 300 positions. I recorded how much winning chance each move gave up, where lower is better. A random move gave up 0.231 per move. Laya v2 gave up 0.103 and fine-tuned CLM gave up 0.098. A model 20 times smaller closed almost the whole gap.
 
 <figure>
-<img src="/assets/images/chess_jev_laya_clm/move_quality.png" alt="Classical ML Curve">
+<img src="/assets/images/chess_jev_laya_clm/move_quality.png" alt="Laya CLM versions move quality.">
 <figcaption>Figure 3. bar chart of winning chance lost per move. Random 0.231, base CLM 0.219, Laya round 1 0.146, Laya v2 0.103, fine-tuned CLM 0.098</figcaption>
 </figure>
 
