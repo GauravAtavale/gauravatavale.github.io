@@ -69,6 +69,10 @@ Out of the box, Jev is in a class of its own. After 10-game matches between ever
 <figcaption>Figure 2. 6×6 crosstable, models ranked by performance.</figcaption>
 </figure>
 
+<p style="font-size: 24px; color: #FFD700; font-weight: bold;">
+Jev is by far the strongest zero-shot model.
+</p>
+
 **Jev is by far the strongest zero-shot model.** It won 29 of 30 games against untrained opponents (including random), and every one of those 29 wins ended in checkmate.
 
 **Fine-tuning lifts small open models to Jev's levels and beyond.** Fine-tuned CLM had the best record against Jev, with 4 wins, 5 draws, and 1 loss (65%). Fine-tuned Laya scored 40%.
