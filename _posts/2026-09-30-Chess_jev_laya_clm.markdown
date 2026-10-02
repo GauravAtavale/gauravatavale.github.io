@@ -2,7 +2,6 @@
 layout: post
 title: "Chess_jev_laya_clm"
 date: 2026-09-30 10:00:00 -0400
-# published: false
 tags: [ai, reinforcement-learning]
 excerpt: "A no-search chess tournament between Jev, Laya, and CLM-8B, zero-shot and after fine-tuning on Stockfish data."
 image: /assets/images/scaling_laws/scaling-laws-cover.png
@@ -17,13 +16,13 @@ image: /assets/images/scaling_laws/scaling-laws-cover.png
 
 *Code, data pipeline, and a replay viewer for every game: [decision-models-chess on GitHub](https://github.com/GauravAtavale/decision-models-chess).*
 
-On September 15, 2026, TypeSafe AI came out of stealth with a model called [**Jev**](https://typesafe.ai){:target="_blank" rel="noopener"}, and it felt like the industry changed overnight. **Jev** isn't a language model in the usual sense. It doesn't generate text; it returns calibrated probabilities over options you define in advance, an approach TypeSafe calls a [**"System One"**](https://docs.typesafe.ai/concepts/system-one){:target="_blank" rel="noopener"} model. On its own workflow evaluations, TypeSafe claims **Jev** is 193.6 times faster and 444.6 times cheaper than using a large language model, and it charges \$0.042 per million input tokens. The reaction was immediate: its launch video drew 36 million views in two days, and within nine days TypeSafe was reportedly negotiating a \$1 billion-plus round at a valuation of around \$10 billion.
+On September 15, 2026, TypeSafe AI came out of stealth with a model called [**Jev**](https://typesafe.ai){:target="_blank" rel="noopener"}, and it felt like the industry changed overnight. **Jev** isn't a language model in the usual sense. It doesn't generate text; it returns calibrated probabilities over options you define in advance, an approach TypeSafe calls a [**"System One"**](https://docs.typesafe.ai/concepts/system-one){:target="_blank" rel="noopener"} model. On its own workflow evaluations, TypeSafe claims **Jev** is 193.6 times faster and 444.6 times cheaper than using a large language model, and it charges '$0.042' per million input tokens. The reaction was immediate: its launch video drew 36 million views in two days, and within nine days TypeSafe was reportedly negotiating a \$1 billion-plus round at a valuation of around \$10 billion.
 
 Alternatives arrived almost as fast. Because Jev isn't open source, the community published its own reproductions almost immediately, and open-weight decision models like [**Laya (ConvAI)**](https://github.com/NandhaKishorM/laya){:target="_blank" rel="noopener"} and [**CLM-8B (Stanford / NVIDIA researchers)**](https://huggingface.co/Contrastive-LM/CLM-v0.1-8B){:target="_blank" rel="noopener"} now promise the same kind of fast, typed decisions, but with weights you can download, run, and fine-tune yourself.
 
 TypeSafe's numbers come from structured business tasks. I wanted to see what happens when you put these models in a genuinely ambiguous setting, where the right move depends on what happens several turns down the line: chess.
 
-Two questions drove the experiment:
+**<u>Two questions drove the experiment:</u>**
 
 1. How well do decision models handle an ambiguous, long-horizon task like chess, where they can't look a single move ahead?
 2. Can open-weight models match or beat Jev if we're allowed to fine-tune them?
@@ -34,11 +33,11 @@ I set up a tournament between **Jev**, **Laya**, and **CLM-8B**, first untrained
 
 All three models work the same way from the outside: you give them a situation and a typed question, and they return a probability for every possible answer in a single pass. Under the hood, and in how you can use them, they're very different.
 
-**<u>Jev</u>** is the reference point. It's available only as TypeSafe's hosted API, and its size and architecture aren't published. You describe your questions in each request and it answers with no training at all, which makes it the most capable of the three out of the box. The tradeoff is control: since its weights aren't public, you can use Jev but <u>_never fine-tune it on your own task._</u>
+[**<u>Jev</u>**](https://typesafe.ai){:target="_blank" rel="noopener"} is the reference point. It's available only as TypeSafe's hosted API, and its size and architecture aren't published. You describe your questions in each request and it answers with no training at all, which makes it the most capable of the three out of the box. The tradeoff is control: since its weights aren't public, you can use Jev but <u>_never fine-tune it on your own task._</u>
 
-**<u>Laya</u>**  is an open-source model of about 400 million parameters, built on the ModernBERT encoder, and it accepts the same request format as Jev, so it can stand in for Jev with almost no code changes. It's small enough to run on a MacBook Air, and you can fine-tune the entire model on your own data. Its authors present it as a <u>_starting point for fine-tuning rather than a finished zero-shot model._</u>
+[**<u>Laya</u>**](https://github.com/NandhaKishorM/laya){:target="_blank" rel="noopener"} is an open-source model of about 400 million parameters, built on the ModernBERT encoder, and it accepts the same request format as Jev, so it can stand in for Jev with almost no code changes. It's small enough to run on a MacBook Air, and you can fine-tune the entire model on your own data. Its authors present it as a <u>_starting point for fine-tuning rather than a finished zero-shot model._</u>
 
-**<u>CLM-8B</u>**  released in September 2026 by researchers from Stanford and NVIDIA, takes a different approach. It turns the situation and each option into separate representations using a frozen Qwen3-8B model, then compares them using two small trained "heads." That means it can score every legal move in a position at once, and <u>_fine-tuning only touches those small heads, which takes minutes._</u> The catch is hardware: it needs a GPU with around 16 GB of memory.
+[**<u>CLM-8B</u>**](https://huggingface.co/Contrastive-LM/CLM-v0.1-8B){:target="_blank" rel="noopener"}  released in September 2026 by researchers from Stanford and NVIDIA, takes a different approach. It turns the situation and each option into separate representations using a frozen Qwen3-8B model, then compares them using two small trained "heads." That means it can score every legal move in a position at once, and <u>_fine-tuning only touches those small heads, which takes minutes._</u> The catch is hardware: it needs a GPU with around 16 GB of memory.
 
 |                       | Jev                | Laya              | CLM-8B                        |
 |-----------------------|--------------------|-------------------|-------------------------------|
