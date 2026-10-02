@@ -2676,3 +2676,58 @@ figure {
     line-height: 1.5;
   }
 }
+
+/* ---------- Tables: follow light/dark mode (overrides Minima's light-only colors) ---------- */
+.post-content table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  margin: 1.75rem 0;
+  font-size: 0.95em;
+  color: var(--text-color);
+  border: 1px solid var(--border-color);
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.post-content table tr,
+.post-content table tr:nth-child(even) {
+  background: transparent;              /* remove Minima's light row stripes */
+}
+
+.post-content table th,
+.post-content table td {
+  padding: 0.75rem 1rem;
+  text-align: left;
+  vertical-align: middle;
+  border: none;
+  border-bottom: 1px solid var(--border-color);
+  background: transparent;
+  color: var(--text-color);
+}
+
+.post-content table thead th {
+  background: var(--grey-color-light);  /* light gray in light mode, dark gray in dark mode */
+  color: var(--heading-color);
+  font-weight: 700;
+}
+
+.post-content table tbody tr:nth-child(even) td {
+  background: var(--code-background);   /* subtle stripe that works in both modes */
+}
+
+.post-content table tbody tr:last-child td {
+  border-bottom: none;
+}
+
+.post-content table td:first-child {
+  font-weight: 600;                     /* row labels stand out from the values */
+  color: var(--grey-color-dark);
+}
+
+@media (max-width: 600px) {
+  .post-content table {
+    display: block;
+    overflow-x: auto;                   /* scroll sideways on phones instead of squashing */
+  }
+}
