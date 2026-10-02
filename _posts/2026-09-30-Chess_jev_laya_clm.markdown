@@ -34,11 +34,11 @@ I set up a tournament between **Jev**, **Laya**, and **CLM-8B**, first untrained
 
 All three models work the same way from the outside: you give them a situation and a typed question, and they return a probability for every possible answer in a single pass. Under the hood, and in how you can use them, they're very different.
 
-[**<u>Jev</u>**](https://typesafe.ai){:target="_blank" rel="noopener"} is the reference point. It's available only as TypeSafe's hosted API, and its size and architecture aren't published. You describe your questions in each request and it answers with no training at all, which makes it the most capable of the three out of the box. The tradeoff is control: since its weights aren't public, you can use Jev but <u>_never fine-tune it on your own task._</u>
+[**<u>Jev</u>**](https://typesafe.ai){:target="_blank" rel="noopener"} is the reference point. It's available only as TypeSafe's hosted API, and its size and architecture aren't published. You describe your questions in each request and it answers with no training at all, which makes it the most capable of the three out of the box. The tradeoff is control: since its weights aren't public, you can use Jev but <u>never fine-tune it on your own task.</u>
 
-[**<u>Laya</u>**](https://github.com/NandhaKishorM/laya){:target="_blank" rel="noopener"} is an open-source model of about 400 million parameters, built on the ModernBERT encoder, and it accepts the same request format as Jev, so it can stand in for Jev with almost no code changes. It's small enough to run on a MacBook Air, and you can fine-tune the entire model on your own data. Its authors present it as a <u>_starting point for fine-tuning rather than a finished zero-shot model._</u>
+[**<u>Laya</u>**](https://github.com/NandhaKishorM/laya){:target="_blank" rel="noopener"} is an open-source model of about 400 million parameters, built on the ModernBERT encoder, and it accepts the same request format as Jev, so it can stand in for Jev with almost no code changes. It's small enough to run on a MacBook Air, and you can fine-tune the entire model on your own data. Its authors present it as a <u>starting point for fine-tuning rather than a finished zero-shot model.</u>
 
-[**<u>CLM-8B</u>**](https://huggingface.co/Contrastive-LM/CLM-v0.1-8B){:target="_blank" rel="noopener"}  released in September 2026 by researchers from Stanford and NVIDIA, takes a different approach. It turns the situation and each option into separate representations using a frozen Qwen3-8B model, then compares them using two small trained "heads." That means it can score every legal move in a position at once, and <u>_fine-tuning only touches those small heads, which takes minutes._</u> The catch is hardware: it needs a GPU with around 16 GB of memory.
+[**<u>CLM-8B</u>**](https://huggingface.co/Contrastive-LM/CLM-v0.1-8B){:target="_blank" rel="noopener"}  released in September 2026 by researchers from Stanford and NVIDIA, takes a different approach. It turns the situation and each option into separate representations using a frozen Qwen3-8B model, then compares them using two small trained "heads." That means it can score every legal move in a position at once, and <u>fine-tuning only touches those small heads, which takes minutes.</u> The catch is hardware: it needs a GPU with around 16 GB of memory.
 
 |                       | Jev                | Laya              | CLM-8B                        |
 |-----------------------|--------------------|-------------------|-------------------------------|
@@ -61,7 +61,7 @@ The key constraint in this experiment is that no model searches. A chess engine 
 
 Each turn, the model sees the position, every legal move, and simple rule facts, such as whether a move would end the game in a draw. It scores the moves and plays the highest.
 
-To fine-tune Laya and CLM, I used Stockfish as a teacher: it scored every legal move in about 30,000 positions, and the models learned to rank moves the same way. Then every pair played a 10-game match. To keep the comparison fair, Jev received the same rule facts and the same instruction to play for a win as the other models. The one difference is that Jev can't be fine-tuned, so this compares Jev out of the box with open models after training.
+To fine-tune Laya and CLM, I used Stockfish (open-source chess engine) as a teacher: it scored every legal move in about 30,000 positions, and the models learned to rank moves the same way. Then every pair played a 10-game match. To keep the comparison fair, Jev received the same rule facts and the same instruction to play for a win as the other models. The one difference is that Jev can't be fine-tuned, so this compares Jev out of the box with open models after training.
 
 
 ## A Ten-Minute Fine-Tune Beat Jev
@@ -94,7 +94,7 @@ Laya fine-tuned (400M parameters) and CLM (8B-based) got the same training data,
 
 <figure>
 <img src="/assets/images/chess_jev_laya_clm/move_quality.png" alt="Laya CLM versions move quality.">
-<figcaption>Figure 3. bar chart of winning chance lost per move. Random 0.231, base CLM 0.219, Laya round 1 0.146, Laya fine-tuned 0.103, fine-tuned CLM 0.098</figcaption>
+<figcaption>Figure 3. bar chart of winning chance lost per move. Random 0.231, base CLM 0.219, Laya round 1 0.146, Laya fine-tuned 0.103, fine-tuned CLM 0.098. Laya v2 is achieved by finetuning laya longer.</figcaption>
 </figure>
 
 ### 4. Untrained CLM played worse than random.
