@@ -72,21 +72,31 @@ Out of the box, Jev is in a class of its own. After 10-game matches between ever
 <p style="font-size: 24px; color: #FFD700; font-weight: bold;">
 Jev is by far the strongest zero-shot model.
 </p>
+It won 29 of 30 games against untrained opponents (including random), and every one of those 29 wins ended in checkmate.
 
-**Jev is by far the strongest zero-shot model.** It won 29 of 30 games against untrained opponents (including random), and every one of those 29 wins ended in checkmate.
+<p style="font-size: 24px; color: #FFD700; font-weight: bold;">
+Fine-tuning lifts small open models to Jev's levels and beyond.
+</p>
+Fine-tuned CLM had the best record against Jev, with 4 wins, 5 draws, and 1 loss (65%). Fine-tuned Laya scored 40%.
 
-**Fine-tuning lifts small open models to Jev's levels and beyond.** Fine-tuned CLM had the best record against Jev, with 4 wins, 5 draws, and 1 loss (65%). Fine-tuned Laya scored 40%.
-
-**Training setup matters more.** Laya v2 (400M parameters) and CLM (8B-based) got the same training data, the same rule facts, and the same Stockfish-based targets. They ended up playing at nearly the same level. To measure move quality, I compared each model's chosen move with Stockfish's best move on the same 300 positions. I recorded how much winning chance each move gave up, where lower is better. A random move gave up 0.231 per move. Laya v2 gave up 0.103 and fine-tuned CLM gave up 0.098. A model 20 times smaller closed almost the whole gap.
+<p style="font-size: 24px; color: #FFD700; font-weight: bold;">
+Training setup matters more.
+</p>
+Laya v2 (400M parameters) and CLM (8B-based) got the same training data, the same rule facts, and the same Stockfish-based targets. They ended up playing at nearly the same level. To measure move quality, I compared each model's chosen move with Stockfish's best move on the same 300 positions. I recorded how much winning chance each move gave up, where lower is better. A random move gave up 0.231 per move. Laya v2 gave up 0.103 and fine-tuned CLM gave up 0.098. A model 20 times smaller closed almost the whole gap.
 
 <figure>
 <img src="/assets/images/chess_jev_laya_clm/move_quality.png" alt="Classical ML Curve">
 <figcaption>Figure 3. bar chart of winning chance lost per move. Random 0.231, base CLM 0.219, Laya round 1 0.146, Laya v2 0.103, fine-tuned CLM 0.098</figcaption>
 </figure>
 
-**Untrained CLM was worse than random.** It scored just 17% against a bot that picks legal moves uniformly at random.
+<p style="font-size: 24px; color: #FFD700; font-weight: bold;">
+Untrained CLM was worse than random.
+</p>
+It scored just 17% against a bot that picks legal moves uniformly at random.
 
-
-**You don't need a big budget to run JEV.** Running Jev for all 50 of its games cost under \$2. Training the open models took a few hours on one Colab A100, and CLM's heads trained in about 10 minutes.
+<p style="font-size: 24px; color: #FFD700; font-weight: bold;">
+You don't need a big budget to run JEV.
+</p>
+Running Jev for all 50 of its games cost under \$2. Training the open models took a few hours on one Colab A100, and CLM's heads trained in about 10 minutes.
 
 With only ten games per matchup, the exact ranking is not definitive—but the larger result is clear: lightweight fine-tuning brought open decision models up to Jev’s level.
