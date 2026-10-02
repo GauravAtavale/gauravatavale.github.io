@@ -8,19 +8,18 @@ excerpt: "A no-search chess tournament between Jev, Laya, and CLM-8B, zero-shot 
 image: /assets/images/scaling_laws/scaling-laws-cover.png
 ---
 
-<video controls muted playsinline loop width="100%">
-  <source src="/assets/images/chess_jev_laya_clm/jev_vs_clm_ft.mp4" type="video/mp4">
-</video>
-<!-- <figure>
-  <video autoplay loop muted playsinline>
+<figure>
+  <video controls muted playsinline loop width="100%">
     <source src="/assets/images/chess_jev_laya_clm/jev_vs_clm_ft.mp4" type="video/mp4">
   </video>
-  <figcaption>Video 1. Fine-tuned CLM (open source) checkmates Jev.</figcaption>
-</figure> -->
+  <figcaption>Video 1. Fine-tuned CLM (open source) checkmates Jev in 22 moves.</figcaption>
+</figure>
 
-On September 15, 2026, TypeSafe AI came out of stealth with a model called **Jev**, and it felt like the industry changed overnight. **Jev** isn't a language model in the usual sense. It doesn't generate text; it returns calibrated probabilities over options you define in advance, an approach TypeSafe calls a **"System One"** model. On its own workflow evaluations, TypeSafe claims **Jev** is 193.6 times faster and 444.6 times cheaper than using a large language model, and it charges \$0.042 per million input tokens. The reaction was immediate: its launch video drew 36 million views in two days, and within nine days TypeSafe was reportedly negotiating a \$1 billion-plus round at a valuation of around \$10 billion.
+*Code, data pipeline, and a replay viewer for every game: [decision-models-chess on GitHub](https://github.com/GauravAtavale/decision-models-chess).*
 
-Alternatives arrived almost as fast. Because Jev isn't open source, the community published its own reproductions almost immediately, and open-weight decision models like **Laya (ConvAI)** and **CLM-8B (Stanford / NVIDIA researchers)** now promise the same kind of fast, typed decisions, but with weights you can download, run, and fine-tune yourself.
+On September 15, 2026, TypeSafe AI came out of stealth with a model called [**Jev**](https://typesafe.ai){:target="_blank" rel="noopener"}, and it felt like the industry changed overnight. **Jev** isn't a language model in the usual sense. It doesn't generate text; it returns calibrated probabilities over options you define in advance, an approach TypeSafe calls a [**"System One"**](https://docs.typesafe.ai/concepts/system-one){:target="_blank" rel="noopener"} model. On its own workflow evaluations, TypeSafe claims **Jev** is 193.6 times faster and 444.6 times cheaper than using a large language model, and it charges \$0.042 per million input tokens. The reaction was immediate: its launch video drew 36 million views in two days, and within nine days TypeSafe was reportedly negotiating a \$1 billion-plus round at a valuation of around \$10 billion.
+
+Alternatives arrived almost as fast. Because Jev isn't open source, the community published its own reproductions almost immediately, and open-weight decision models like [**Laya (ConvAI)**](https://github.com/NandhaKishorM/laya){:target="_blank" rel="noopener"} and [**CLM-8B (Stanford / NVIDIA researchers)**](https://huggingface.co/Contrastive-LM/CLM-v0.1-8B){:target="_blank" rel="noopener"} now promise the same kind of fast, typed decisions, but with weights you can download, run, and fine-tune yourself.
 
 TypeSafe's numbers come from structured business tasks. I wanted to see what happens when you put these models in a genuinely ambiguous setting, where the right move depends on what happens several turns down the line: chess.
 
@@ -62,11 +61,12 @@ The key constraint in this experiment is that no model searches. A chess engine 
 
 Each turn, the model sees the position, every legal move, and simple rule facts, such as whether a move would end the game in a draw. It scores the moves and plays the highest.
 
-To fine-tune Laya and CLM, I used Stockfish as a teacher: it scored every legal move in about 30,000 positions, and the models learned to rank moves the same way. Then every pair played a 10-game match.
+To fine-tune Laya and CLM, I used Stockfish as a teacher: it scored every legal move in about 30,000 positions, and the models learned to rank moves the same way. Then every pair played a 10-game match.To keep the comparison fair, Jev received the same rule facts and the same instruction to play for a win as the other models. The one difference is that Jev can't be fine-tuned, so this compares Jev out of the box with open models after training.
+
 
 ## A Ten-Minute Fine-Tune Beat Jev
 
-Out of the box, Jev is in a class of its own. After 10-game matches between every pair of models, the picture came down to five findings.
+Out of the box, Jev is in a class of its own. After nine 10-game matches between every pair of models, the picture came down to five findings.
 
 <figure>
 <img src="/assets/images/chess_jev_laya_clm/head_to_head.png" alt="Models ranked by performance">
@@ -78,29 +78,53 @@ Jev is by far the strongest zero-shot model.
 </p>
 It won 29 of 30 games against untrained opponents (including random), and every one of those 29 wins ended in checkmate.
 
+<figure>
+  <video controls muted playsinline loop width="100%">
+    <source src="/assets/images/chess_jev_laya_clm/jev_vs_clm_base.mp4" type="video/mp4">
+  </video>
+  <figcaption>Video 2. Jev checkmates untrained CLM in 23 moves, with no chess training at all.</figcaption>
+</figure>
+
 <p style="font-size: 24px; color: #FFD700; font-weight: bold;">
-Fine-tuning lifts small open models to Jev's levels and beyond.
+Fine-tuning lifts small open models to Jev's levels.
 </p>
 Fine-tuned CLM had the best record against Jev, with 4 wins, 5 draws, and 1 loss (65%). Fine-tuned Laya scored 40%.
 
 <p style="font-size: 24px; color: #FFD700; font-weight: bold;">
 Training setup matters more.
 </p>
-Laya v2 (400M parameters) and CLM (8B-based) got the same training data, the same rule facts, and the same Stockfish-based targets. They ended up playing at nearly the same level. To measure move quality, I compared each model's chosen move with Stockfish's best move on the same 300 positions. I recorded how much winning chance each move gave up, where lower is better. A random move gave up 0.231 per move. Laya v2 gave up 0.103 and fine-tuned CLM gave up 0.098. A model 20 times smaller closed almost the whole gap.
+Laya fine-tuned (400M parameters) and CLM (8B-based) got the same training data, the same rule facts, and the same Stockfish-based targets. They ended up playing at nearly the same level (Against each other, they split their match 5–5, and a longer 50-game match ended almost even (53%)). To measure move quality, I compared each model's chosen move with Stockfish's best move on the same 300 positions. I recorded how much winning chance each move gave up, where lower is better. A random move gave up 0.231 per move. Laya fine-tuned gave up 0.103 and fine-tuned CLM gave up 0.098. A model 20 times smaller matched it almost exactly.
 
 <figure>
 <img src="/assets/images/chess_jev_laya_clm/move_quality.png" alt="Laya CLM versions move quality.">
-<figcaption>Figure 3. bar chart of winning chance lost per move. Random 0.231, base CLM 0.219, Laya round 1 0.146, Laya v2 0.103, fine-tuned CLM 0.098</figcaption>
+<figcaption>Figure 3. bar chart of winning chance lost per move. Random 0.231, base CLM 0.219, Laya round 1 0.146, Laya fine-tuned 0.103, fine-tuned CLM 0.098</figcaption>
 </figure>
 
 <p style="font-size: 24px; color: #FFD700; font-weight: bold;">
-Untrained CLM was worse than random.
+Untrained CLM played worse than random.
 </p>
 It scored just 17% against a bot that picks legal moves uniformly at random.
 
+<figure>
+  <video controls muted playsinline loop width="100%">
+    <source src="/assets/images/chess_jev_laya_clm/clm_base_vs_random.mp4" type="video/mp4">
+  </video>
+  <figcaption>Video 3. A random player checkmates untrained CLM in 70 moves.</figcaption>
+</figure>
+
 <p style="font-size: 24px; color: #FFD700; font-weight: bold;">
-You don't need a big budget to run JEV.
+4. Converting a won position is everyone's weak spot.
+</p>
+Most games between the strong models ended in draws. Fine-tuned Laya and fine-tuned CLM drew 8 of their 10 games, 7 of them by repeating the same position three times. Without search, the models can reach winning positions but often don't know how to finish them: in a longer 50-game match between the two, 16 of the draws came with one side at least three points of material ahead.
+
+<p style="font-size: 24px; color: #FFD700; font-weight: bold;">
+5. The whole experiment ran on a hobby budget.
 </p>
 Running Jev for all 50 of its games cost under \$2. Training the open models took a few hours on one Colab A100, and CLM's heads trained in about 10 minutes.
 
 With only ten games per matchup, the exact ranking is not definitive—but the larger result is clear: lightweight fine-tuning brought open decision models up to Jev’s level.
+
+
+## The takeaway
+
+Jev is remarkably capable out of the box, even at a game it was never built for. But with a few hours of data generation and minutes to hours of training, open decision models caught up, and one beat it head to head. The biggest gains came from better training data, not a bigger model. The code, data pipeline, and a replay viewer for every game are on [GitHub](https://github.com/GauravAtavale/decision-models-chess/tree/main).
