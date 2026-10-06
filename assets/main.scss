@@ -2731,3 +2731,60 @@ figure {
     overflow-x: auto;                   /* scroll sideways on phones instead of squashing */
   }
 }
+
+// "Book a Meeting" call-to-action button in the nav
+.site-nav .trigger a.page-link.nav-cta {
+  --cta-bg: var(--brand-color);
+  --cta-fg: var(--background-color);
+
+  padding: 6px 16px;
+  border-radius: 999px;
+  line-height: 1.4;
+  font-weight: 500;
+  transition: opacity 0.15s ease, transform 0.15s ease;
+
+  &,
+  &:visited,
+  &:hover,
+  &:focus-visible {
+    background: var(--cta-bg) !important;
+    color: var(--cta-fg) !important;
+    border: 1px solid var(--cta-bg) !important;
+  }
+
+  &:hover,
+  &:focus-visible {
+    opacity: 0.85;
+    transform: translateY(-1px);
+  }
+}
+
+// Homepage only: alternate between normal and red
+.site-nav .trigger a.page-link.nav-cta--blink {
+  animation: cta-blink 1.4s step-end 5;
+}
+
+@keyframes cta-blink {
+  50% {
+    --cta-bg: #e03131;
+    --cta-fg: #ffffff;
+  }
+}
+
+// Visitors who turn off animations get a steady red button instead
+@media (prefers-reduced-motion: reduce) {
+  .site-nav .trigger a.page-link.nav-cta--blink {
+    animation: none;
+    --cta-bg: #e03131;
+    --cta-fg: #ffffff;
+  }
+}
+
+// Mobile dropdown menu
+@media screen and (max-width: 600px) {
+  .site-nav .trigger a.page-link.nav-cta {
+    display: inline-block;
+    margin: 6px 0 6px 20px;
+    padding: 5px 14px;
+  }
+}

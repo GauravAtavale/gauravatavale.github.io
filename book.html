@@ -1,32 +1,83 @@
 ---
 layout: page
-title: Book a Meeting
+title: Book a Chat
 permalink: /book/
 ---
 
-<h1>Book a meeting</h1>
-<p>Want to chat about GenAI, RL, or something you're building? Grab a 15-minute slot below.</p>
+<h1>Book a chat</h1>
+<p>Happy to help. Pick the kind of conversation you'd like, then grab a time that works.</p>
 
-<div id="cal-booking" style="width:100%; min-height:650px; overflow:auto;"></div>
+<div class="duration-picker" role="radiogroup" aria-label="Meeting length">
+  <label class="duration-option">
+    <input type="radio" name="duration" value="15min" checked>
+    <span class="duration-card">
+      <strong>15 min</strong>
+      <span>Introductions, or asking about a referral</span>
+    </span>
+  </label>
+  <label class="duration-option">
+    <input type="radio" name="duration" value="30min">
+    <span class="duration-card">
+      <strong>30 min</strong>
+      <span>Longer discussions: resume review, interview prep, career advice</span>
+    </span>
+  </label>
+</div>
+
+<p class="booking-note">📎 Booking a resume review or referral? Add a link to your resume in the booking form so I can look it over before we talk.</p>
+
+<div id="cal-15min"></div>
+<div id="cal-30min" hidden></div>
+
+<style>
+  .duration-picker { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin: 1.5rem 0 1rem; }
+  @media (max-width: 600px) { .duration-picker { grid-template-columns: 1fr; } }
+  .duration-option input { position: absolute; opacity: 0; pointer-events: none; }
+  .duration-card {
+    display: block; height: 100%; padding: 14px 16px; cursor: pointer;
+    border: 1.5px solid var(--border-color); border-radius: 12px;
+    transition: border-color 0.15s ease, background 0.15s ease;
+  }
+  .duration-card strong { display: block; font-size: 1.1rem; margin-bottom: 4px; }
+  .duration-card span { color: var(--grey-color); font-size: 0.95rem; line-height: 1.4; }
+  .duration-option:hover .duration-card { border-color: var(--grey-color); }
+  .duration-option input:checked + .duration-card { border-color: var(--brand-color); background: var(--card-background); }
+  .duration-option input:focus-visible + .duration-card { outline: 2px solid var(--brand-color); outline-offset: 2px; }
+  .booking-note { font-size: 0.95rem; color: var(--grey-color); margin-bottom: 1rem; }
+  #cal-15min, #cal-30min { width: 100%; min-height: 650px; overflow: auto; }
+</style>
 
 <script type="text/javascript">
   (function (C, A, L) { let p = function (a, ar) { a.q.push(ar); }; let d = C.document; C.Cal = C.Cal || function () { let cal = C.Cal; let ar = arguments; if (!cal.loaded) { cal.ns = {}; cal.q = cal.q || []; d.head.appendChild(d.createElement("script")).src = A; cal.loaded = true; } if (ar[0] === L) { const api = function () { p(api, arguments); }; const namespace = ar[1]; api.q = api.q || []; if (typeof namespace === "string") { cal.ns[namespace] = cal.ns[namespace] || api; p(cal.ns[namespace], ar); p(cal, ["initNamespace", namespace]); } else p(cal, ar); return; } p(cal, ar); }; })(window, "https://app.cal.com/embed/embed.js", "init");
 
-  // Match the blog's light/dark toggle
+  var CAL_USER = "gaurav-atavale";   // your Cal.com username
+  var SLUGS = ["15min", "30min"];    // must match your event type URLs
+
   function getBlogTheme() {
     return document.documentElement.getAttribute('data-theme') === 'dark' ? 'dark' : 'light';
   }
 
-  Cal("init", "15min", { origin: "https://cal.com" });
-  Cal.ns["15min"]("inline", {
-    elementOrSelector: "#cal-booking",
-    calLink: "gaurav-atavale/15min",
-    config: { layout: "month_view", theme: getBlogTheme() }
-  });
-  Cal.ns["15min"]("ui", { hideEventTypeDetails: false, layout: "month_view", theme: getBlogTheme() });
+  var loaded = {};
+  function showCalendar(slug) {
+    SLUGS.forEach(function (s) { document.getElementById('cal-' + s).hidden = (s !== slug); });
+    if (loaded[slug]) return;
+    Cal("init", slug, { origin: "https://cal.com" });
+    Cal.ns[slug]("inline", {
+      elementOrSelector: "#cal-" + slug,
+      calLink: CAL_USER + "/" + slug,
+      config: { layout: "month_view", theme: getBlogTheme() }
+    });
+    Cal.ns[slug]("ui", { hideEventTypeDetails: false, layout: "month_view", theme: getBlogTheme() });
+    loaded[slug] = true;
+  }
 
-  // Re-theme the calendar whenever the blog's toggle is clicked
+  document.querySelectorAll('input[name="duration"]').forEach(function (radio) {
+    radio.addEventListener('change', function () { showCalendar(this.value); });
+  });
+  showCalendar("15min");
+
+  // Keep calendars in sync with the blog's light/dark toggle
   new MutationObserver(function () {
-    Cal.ns["15min"]("ui", { theme: getBlogTheme() });
+    Object.keys(loaded).forEach(function (s) { Cal.ns[s]("ui", { theme: getBlogTheme() }); });
   }).observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
 </script>
