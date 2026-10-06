@@ -2734,33 +2734,29 @@ figure {
 
 // "Book a Chat" nav link: on the homepage only, the text blinks red
 .site-nav .trigger a.page-link.nav-cta--blink {
-  --cta-red: #e03131;
-  --cta-fg: var(--text-color);
-  animation: cta-blink 3s step-end infinite;
-
-  &,
-  &:visited,
-  &:hover,
-  &:focus-visible {
-    color: var(--cta-fg) !important;
-  }
+  animation: cta-blink 1.4s step-end infinite;
 }
 
 // Slightly brighter red so it stays readable on the dark background
 [data-theme="dark"] .site-nav .trigger a.page-link.nav-cta--blink {
-  --cta-red: #ff6b6b;
+  animation-name: cta-blink-dark;
 }
 
 @keyframes cta-blink {
-  50% {
-    --cta-fg: var(--cta-red);
-  }
+  50% { -webkit-text-fill-color: #e03131; }
+}
+
+@keyframes cta-blink-dark {
+  50% { -webkit-text-fill-color: #ff6b6b; }
 }
 
 // Visitors who turn off animations see steady red text instead
 @media (prefers-reduced-motion: reduce) {
   .site-nav .trigger a.page-link.nav-cta--blink {
     animation: none;
-    --cta-fg: var(--cta-red);
+    -webkit-text-fill-color: #e03131;
+  }
+  [data-theme="dark"] .site-nav .trigger a.page-link.nav-cta--blink {
+    -webkit-text-fill-color: #ff6b6b;
   }
 }
