@@ -1,0 +1,25 @@
+---
+layout: page
+title: Book a Meeting
+permalink: /book/
+---
+
+<h1>Book a meeting</h1>
+<p>Want to chat about GenAI, RL, or something you're building? Grab a 15-minute slot below.</p>
+
+<div id="cal-booking" style="width:100%; min-height:650px; overflow:auto;"></div>
+
+<script type="text/javascript">
+  (function (C, A, L) { let p = function (a, ar) { a.q.push(ar); }; let d = C.document; C.Cal = C.Cal || function () { let cal = C.Cal; let ar = arguments; if (!cal.loaded) { cal.ns = {}; cal.q = cal.q || []; d.head.appendChild(d.createElement("script")).src = A; cal.loaded = true; } if (ar[0] === L) { const api = function () { p(api, arguments); }; const namespace = ar[1]; api.q = api.q || []; if (typeof namespace === "string") { cal.ns[namespace] = cal.ns[namespace] || api; p(cal.ns[namespace], ar); p(cal, ["initNamespace", namespace]); } else p(cal, ar); return; } p(cal, ar); }; })(window, "https://app.cal.com/embed/embed.js", "init");
+
+  // Match the blog's light/dark toggle
+  var blogTheme = document.documentElement.getAttribute('data-theme') === 'dark' ? 'dark' : 'light';
+
+  Cal("init", "15min", { origin: "https://cal.com" });
+  Cal.ns["15min"]("inline", {
+    elementOrSelector: "#cal-booking",
+    calLink: "gaurav-atavale/15min",   // <-- change to YOUR username/event slug
+    config: { layout: "month_view", theme: blogTheme }
+  });
+  Cal.ns["15min"]("ui", { hideEventTypeDetails: false, layout: "month_view" });
+</script>
