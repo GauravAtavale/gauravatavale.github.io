@@ -7,44 +7,46 @@ permalink: /book/
 <h1>Book a chat</h1>
 <p>Happy to help. Pick the kind of conversation you'd like, then grab a time that works.</p>
 
-<div class="duration-picker" role="radiogroup" aria-label="Meeting length">
-  <label class="duration-option">
-    <input type="radio" name="duration" value="15min" checked>
-    <span class="duration-card">
-      <strong>15 min</strong>
-      <span>Introductions, or asking about a referral</span>
-    </span>
-  </label>
-  <label class="duration-option">
-    <input type="radio" name="duration" value="30min">
-    <span class="duration-card">
-      <strong>30 min</strong>
-      <span>Longer discussions: resume review, interview prep, career advice</span>
-    </span>
-  </label>
+<div class="book-page">
+  <h1>Book a chat</h1>
+  <p class="book-intro">Pick the kind of conversation you'd like, then grab a time that works.</p>
+
+  <div class="duration-picker" role="radiogroup" aria-label="Meeting length">
+    <label class="duration-option">
+      <input type="radio" name="duration" value="15min" checked>
+      <span class="duration-card"><strong>15 min</strong> <span>Introductions or a referral request</span></span>
+    </label>
+    <label class="duration-option">
+      <input type="radio" name="duration" value="30min">
+      <span class="duration-card"><strong>30 min</strong> <span>Resume review, interview prep, career advice</span></span>
+    </label>
+  </div>
+
+  <p class="booking-note">📎 For a resume review or referral, add a link to your resume in the booking form.</p>
+
+  <div id="cal-15min"></div>
+  <div id="cal-30min" hidden></div>
 </div>
 
-<p class="booking-note">📎 Booking a resume review or referral? Add a link to your resume in the booking form so I can look it over before we talk.</p>
-
-<div id="cal-15min"></div>
-<div id="cal-30min" hidden></div>
-
 <style>
-  .duration-picker { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin: 1.5rem 0 1rem; }
-  @media (max-width: 600px) { .duration-picker { grid-template-columns: 1fr; } }
-  .duration-option input { position: absolute; opacity: 0; pointer-events: none; }
-  .duration-card {
-    display: block; height: 100%; padding: 14px 16px; cursor: pointer;
-    border: 1.5px solid var(--border-color); border-radius: 12px;
+  .post-content .book-page h1 { margin: 0 0 0.3rem !important; font-size: 2rem; padding-bottom: 0.2rem; }
+  .post-content .book-page .book-intro { margin: 0.5rem 0 0.8rem !important; }
+  .book-page .duration-picker { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin: 0 0 0.5rem; }
+  @media (max-width: 600px) { .book-page .duration-picker { grid-template-columns: 1fr; } }
+  .book-page .duration-option { margin: 0; }
+  .book-page .duration-option input { position: absolute; opacity: 0; pointer-events: none; }
+  .book-page .duration-card {
+    display: block; padding: 8px 14px; cursor: pointer; line-height: 1.4;
+    border: 1.5px solid var(--border-color); border-radius: 10px;
     transition: border-color 0.15s ease, background 0.15s ease;
   }
-  .duration-card strong { display: block; font-size: 1.1rem; margin-bottom: 4px; }
-  .duration-card span { color: var(--grey-color); font-size: 0.95rem; line-height: 1.4; }
-  .duration-option:hover .duration-card { border-color: var(--grey-color); }
-  .duration-option input:checked + .duration-card { border-color: var(--brand-color); background: var(--card-background); }
-  .duration-option input:focus-visible + .duration-card { outline: 2px solid var(--brand-color); outline-offset: 2px; }
-  .booking-note { font-size: 0.95rem; color: var(--grey-color); margin-bottom: 1rem; }
-  #cal-15min, #cal-30min { width: 100%; min-height: 650px; overflow: auto; }
+  .book-page .duration-card strong { margin-right: 0.35rem; }
+  .book-page .duration-card span { color: var(--grey-color); font-size: 0.9rem; }
+  .book-page .duration-option:hover .duration-card { border-color: var(--grey-color); }
+  .book-page .duration-option input:checked + .duration-card { border-color: var(--brand-color); background: var(--card-background); }
+  .book-page .duration-option input:focus-visible + .duration-card { outline: 2px solid var(--brand-color); outline-offset: 2px; }
+  .post-content .book-page .booking-note { font-size: 0.85rem; color: var(--grey-color); margin: 0 0 0.25rem !important; }
+  #cal-15min, #cal-30min { width: 100%; min-height: 600px; overflow: auto; }
 </style>
 
 <script type="text/javascript">
