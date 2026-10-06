@@ -2734,7 +2734,7 @@ figure {
 
 // "Book a Chat" nav link: on the homepage only, the text blinks red
 .site-nav .trigger a.page-link.nav-cta--blink {
-  animation: cta-blink 3s step-end infinite;
+  animation: cta-blink 5s step-end 20;
 }
 
 // Slightly brighter red so it stays readable on the dark background
