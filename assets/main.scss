@@ -2736,7 +2736,7 @@ figure {
 .site-nav .trigger a.page-link.nav-cta--blink {
   --cta-red: #e03131;
   --cta-fg: var(--text-color);
-  animation: cta-blink 3s step-end 15;
+  animation: cta-blink 3s step-end infinite;
 
   &,
   &:visited,
